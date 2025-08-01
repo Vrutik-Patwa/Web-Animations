@@ -1,10 +1,11 @@
 import styles from "./App.module.css";
 import useMousePosition from "./utils/useMousePosition";
 import { motion } from "framer-motion";
-
+import { useState } from "react";
 function App() {
   const { x, y } = useMousePosition();
-  const size = 40;
+  const [isHovered, setIshovered] = useState(false);
+  const size = isHovered ? 400 : 40;
   return (
     <main className={styles.main}>
       {/* Mask */}
@@ -12,10 +13,14 @@ function App() {
         className={styles.mask}
         animate={{
           WebkitMaskPosition: `${x - size / 2}px ${y - size / 2}px`,
+          WebkitMaskSize: `${size}px`,
         }}
         transition={{ type: "tween", ease: "backOut" }}
       >
-        <p>
+        <p
+          onMouseEnter={() => setIshovered(true)}
+          onMouseLeave={() => setIshovered(false)}
+        >
           A visual designer with skills that haven't been replaced by AI (yet).
           I make good stuff — only if the paycheck is good.
         </p>
